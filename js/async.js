@@ -56,7 +56,7 @@ const loadVideo = async () => {
     console.log(videoDiv.childNodes);
 
     // resolucao de um bug que adicionava dois video de uma vez só
-    if (!videoDiv.childNodes[0]) videoDiv.appendChild(video);
+    videoDiv.appendChild(video);
 
     video.src = videoPath;
     video.play();
