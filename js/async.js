@@ -33,7 +33,7 @@ async function carregaImagem() {
   try {
     loaderText.textContent = "Carregando imagem...";
 
-    const img = await fetch("./assets/cenario.jpg");
+    const img = await fetch("../assets/cenario.jpg");
     await delay(500);
 
     gameContainer.style.backgroundImage = `url(${img.url})`;
@@ -77,7 +77,7 @@ const loadVideo = async () => {
 };
 
 const videoDiv = document.getElementById("videoDiv");
-const videoPath = "./assets/video/play2.mp4";
+const videoPath = "../assets/video/play2.mp4";
 
 botaoLigar.addEventListener("click", () => {
   loadVideo();
