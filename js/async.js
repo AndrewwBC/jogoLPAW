@@ -8,6 +8,7 @@ const gameContainer = document.getElementById("container");
 const botaoIniciar = document.getElementById("btnIniciar");
 
 const botaoLigar = document.getElementById("btnLigar");
+export let flagLigado = false;
 
 export const iniciar = false;
 
@@ -48,11 +49,15 @@ async function carregaImagem() {
   }
 }
 
-const loadVideo = async () =>
+const loadVideo = async () => {
   new Promise((resolve) => {
     const video = document.createElement("video");
 
-    videoDiv.appendChild(video);
+    console.log(videoDiv.childNodes);
+
+    // resolucao de um bug que adicionava dois video de uma vez só
+    if (!videoDiv.childNodes[0]) videoDiv.appendChild(video);
+
     video.src = videoPath;
     video.play();
 
@@ -69,12 +74,14 @@ const loadVideo = async () =>
 
     resolve(true);
   });
+};
 
 const videoDiv = document.getElementById("videoDiv");
 const videoPath = "./assets/video/play2.mp4";
 
 botaoLigar.addEventListener("click", () => {
   loadVideo();
+  // flagLigado = true;
 });
 
 async function carregaAudioImagem() {

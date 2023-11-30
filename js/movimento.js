@@ -1,5 +1,6 @@
 import audioTema from "../assets/sounds/magic.mp3";
 import gameOver from "../assets/sounds/gameover.mp3";
+import { flagLigado } from "./async";
 
 const audio = new Audio(audioTema);
 const audioGameOver = new Audio(gameOver);
@@ -11,10 +12,7 @@ const gobRight = document.getElementById("gobRight");
 const goblinsContainer = document.getElementById("goblins");
 
 const fire = document.getElementById("fire");
-const container = document.getElementById("container");
 const gobUpEixo = gobUp.getBoundingClientRect();
-const gobRightEixo = gobRight.getBoundingClientRect();
-const gobLeftEixo = gobLeft.getBoundingClientRect();
 
 const placar = document.getElementById("placar");
 const botaoIniciar = document.getElementById("btnIniciar");
@@ -77,7 +75,7 @@ const loop = () => {
       return;
     }
     anime = requestAnimationFrame(loop);
-  }, 16);
+  }, 500);
 };
 
 botaoIniciar.addEventListener("click", () => {
@@ -88,51 +86,53 @@ botaoIniciar.addEventListener("click", () => {
 });
 
 window.addEventListener("keypress", (event) => {
-  if (event.key === "d") {
-    flagChange = true;
+  if (flagLigado) {
+    if (event.key === "d") {
+      flagChange = true;
 
-    if (count < 385) {
-      count += 35;
+      if (count < 385) {
+        count += 35;
+      }
+
+      // gobRight.style.left = `${count}px`;
+      goblinsContainer.style.left = `${count}px`;
+
+      gobRight.style.animation = "walkRight 1s infinite step-end";
+
+      gobLeft.style.animation = "none";
+      gobLeft.style.visibility = "hidden";
+      gobUp.style.visibility = "hidden";
     }
 
-    // gobRight.style.left = `${count}px`;
-    goblinsContainer.style.left = `${count}px`;
+    if (event.key === "w") {
+      if (flagChange) {
+        gobUp.style.left = gobRight.style.left;
+      } else {
+        gobUp.style.left = gobLeft.style.left;
+      }
 
-    gobRight.style.animation = "walkRight 1s infinite step-end";
+      gobLeft.style.animation = "none";
+      gobRight.style.animation = "none";
 
-    gobLeft.style.animation = "none";
-    gobLeft.style.visibility = "hidden";
-    gobUp.style.visibility = "hidden";
-  }
-
-  if (event.key === "w") {
-    if (flagChange) {
-      gobUp.style.left = gobRight.style.left;
-    } else {
-      gobUp.style.left = gobLeft.style.left;
+      gobUp.style.visibility = "visible";
     }
 
-    gobLeft.style.animation = "none";
-    gobRight.style.animation = "none";
+    if (event.key === "a") {
+      flagChange = false;
 
-    gobUp.style.visibility = "visible";
-  }
+      if (count <= 385 && count >= 35) {
+        count -= 35;
+      }
 
-  if (event.key === "a") {
-    flagChange = false;
+      //gobLeft.style.left = `${count}px`;
 
-    if (count <= 385 && count >= 35) {
-      count -= 35;
+      goblinsContainer.style.left = `${count}px`;
+
+      gobUp.style.visibility = "hidden";
+      gobRight.style.animation = "none";
+      gobRight.style.visibility = "hidden";
+
+      gobLeft.style.animation = "walkLeft 1s infinite step-end";
     }
-
-    //gobLeft.style.left = `${count}px`;
-
-    goblinsContainer.style.left = `${count}px`;
-
-    gobUp.style.visibility = "hidden";
-    gobRight.style.animation = "none";
-    gobRight.style.visibility = "hidden";
-
-    gobLeft.style.animation = "walkLeft 1s infinite step-end";
   }
 });
