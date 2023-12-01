@@ -77,7 +77,7 @@ const loadVideo = async () => {
 };
 
 const videoDiv = document.getElementById("videoDiv");
-const videoPath = "../assets/video/play2.mp4";
+const videoPath = "assets/video/play2.mp4";
 
 botaoLigar.addEventListener("click", () => {
   loadVideo();
